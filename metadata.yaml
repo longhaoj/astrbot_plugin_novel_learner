@@ -1,0 +1,31 @@
+name: astrbot_plugin_novel_learner
+display_name: 小说学习器
+short_desc: 抓网页小说正文，提炼写作风格并注入对话，让 bot 学着那个调子说话
+desc: |
+  发 /学 <网址> 抓取网页正文（自动去导航、广告、脚本），交给当前模型分析出一份可执行的写作风格卡，
+  之后每轮对话把这套风格追加进 system_prompt——bot 就会用那本书的调子说话。
+
+  特性：
+  - 正文提取：优先匹配常见章节容器（#chaptercontent / #content / article 等），取纯文本最长的那个，不足 200 字自动回退整个 body
+  - 清洗：去 script/style/nav/header/footer，去短行与广告行（关键词可配置）
+  - 风格卡：人称/句式/用词/对白/描写密度 + 3–5 条可直接照做的句式模板
+  - 多素材管理：/学 列表、/学 用 N 切换、/学 看 查看、/学 删 N 删除、/学 关 关闭注入
+  - 激活二次确认：抓完只入库不生效，回「是」才套用，超时/换会话都不认
+  - 零额外依赖：只用 AstrBot 自带的 requests + beautifulsoup4 + lxml，抓取在线程里跑，不阻塞事件循环
+version: 1.0.0
+author: YG
+repo: https://github.com/longhaoj/astrbot_plugin_novel_learner
+astrbot_version: ">=4.9.0"
+main: main.py
+support_platforms:
+  - aiocqhttp
+  - qq_official
+  - telegram
+  - discord
+social_link: https://github.com/longhaoj
+tags:
+  - 小说
+  - 抓取
+  - 风格模仿
+  - 写作
+  - 提示词
